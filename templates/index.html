@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Panel Responsivo Golang</title>
+
+	<!-- CAMBIO IMPORTANTE: -->
+	<!-- Ahora la ruta es absoluta hacia el servidor estático que definimos en main.go -->
+	<link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+
+	<div class="main-panel">
+
+		<div class="section">
+			<h1>Sección 1: Introducción</h1>
+			<p>
+				Si ves este borde verde, ¡la carga de estáticos en Go funcionó!
+			</p>
+		</div>
+
+		<div class="section">
+			<h1>Sección 2: Contenido</h1>
+			<p>
+				El handler de Go procesó este template, y el navegador hizo una
+				petición separada a <code>/static/styles.css</code> para pintarlo.
+			</p>
+		</div>
+
+		<div class="section">
+			<h1>Sección 3: Final</h1>
+			<p>
+				Recuerda: Go no lee el CSS, solo le dice al navegador dónde encontrarlo.
+			</p>
+		</div>
+	</div>
+
+	<button id="postButton">Click Me For POST Request</button>
+
+</body>
+
+<script type="text/javascript">
+	// Obtener el botón por su ID
+	const button = document.getElementById('postButton');
+
+	// Agregar un 'listener' para el evento click
+	button.addEventListener('click', async () => {
+		console.log("lmao");
+		const data = {
+			value: "Valor ingresado, increíble"
+		};
+		const url = 'http://localhost:8080/secret';
+
+		messageElement.textContent = "Enviando solicitud POST a " + url + "...";
+		button.disabled = true; // Deshabilitar para evitar múltiples envíos
+
+		try {
+			// Usar la Fetch API para hacer la llamada POST
+			const response = await fetch(url, {
+				method: 'POST', // Especificar el método
+				headers: {
+					// Es crucial para enviar JSON
+					'Content-Type': 'application/json'
+				},
+				// Convertir el objeto JavaScript a una cadena JSON
+				body: JSON.stringify(data)
+			});
+
+			// Verificar si la respuesta fue exitosa (código 200-299)
+			if (response.ok) {
+				const result = await response.text(); // o .json() si el servidor devuelve JSON
+				messageElement.textContent = `✅ POST exitoso! Servidor respondió: ${result.substring(0, 50)}...`;
+			} else {
+				messageElement.textContent = `❌ Error en el POST: Código ${response.status}.`;
+			}
+
+		} catch (error) {
+			// Capturar errores de red o del servidor
+			messageElement.textContent = `❌ Error de conexión: Asegúrate que el servidor esté corriendo en ${url}.`;
+			console.error('Error:', error);
+		} finally {
+			button.disabled = false;
+		}
+	});
+</script>
+
+</html>

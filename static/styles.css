@@ -1,0 +1,86 @@
+/* RESET BÁSICO 
+   Para asegurar consistencia entre navegadores
+*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* FONDO GENERAL (Background)
+   "Un fondo negro con alpha para que sea algo gris"
+*/
+body {
+    /* Usamos un color base y luego un rgba para simular el efecto */
+    background-color: #000; 
+    background-image: linear-gradient(rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.9));
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    
+    /* Centrado del panel principal */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centrado vertical también, opcional */
+}
+
+/* PANEL PRINCIPAL
+   "Todo el contenido se encontrará centrado en un panel... 75% del espacio"
+*/
+.main-panel {
+    width: 75%;
+    min-height: 80vh; /* Altura mínima para que se vea bien */
+    background-color: #f4f4f4; /* Fondo claro para leer el texto */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Sombra para dar profundidad */
+    padding: 2rem;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre las 3 secciones */
+}
+
+/* SECCIONES
+   "La pagina tiene 3 secciones"
+*/
+.section {
+    padding: 1rem;
+    background-color: #fff;
+    /* Opcional: para distinguir las secciones sutilmente */
+    border-radius: 4px; 
+}
+
+/* ESTILOS DE TEXTO ESPECÍFICOS
+   "todo lo que sea <p> o <h1> tendrá un borde negro (verde) de 2 px"
+*/
+h1, p {
+    /* Interpreté "borde negro... color verde" como borde sólido de color verde */
+    border: 2px solid #28a745; /* Verde estilo "Success" */
+    
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+h1 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* RESPONSIVIDAD (MEDIA QUERY)
+   "haz que bajo ciertas resoluciones no se vea el fondo negro"
+*/
+@media (max-width: 768px) {
+    body {
+        /* Quitamos el padding/centrado del body para que ocupe todo */
+        display: block; 
+        background-color: #f4f4f4; /* El fondo se vuelve igual al del panel */
+        background-image: none; /* Quitamos el efecto oscuro */
+    }
+
+    .main-panel {
+        width: 100%;     /* Ocupa todo el ancho */
+        min-height: 100vh; /* Ocupa toda la altura */
+        box-shadow: none; /* Quitamos la sombra */
+        border-radius: 0;
+    }
+}
